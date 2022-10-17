@@ -12,7 +12,8 @@ function App() {
     };
 
     getBooks();
-  }, []);
+    console.log(books)
+  }, [books]);
   
   return (
     <div className="App">
