@@ -1,11 +1,11 @@
 import { IBook } from "../Book/Book.model";
 
-export interface IBookself {
+export interface IBookshelf {
   title: string
   books: IBook[]
 }
 
-export enum BookselfType {
+export enum BookshelfType {
   CurrentlyReading = "currentlyReading",
   WantToRead = "wantToRead",
   Read = "read"
