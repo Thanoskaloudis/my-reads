@@ -1,4 +1,5 @@
 import React from 'react';  
+import { BookChanger } from '../BookChanger/BookChanger';
 import { IBook } from './Book.model';
 import './Book.scss';
 
@@ -11,6 +12,7 @@ export const Book = (props: IBook) => {
         <span className="book--author" key={author}>{author}</span>
       ))
       }
+      <BookChanger />
     </div>
   )
 }

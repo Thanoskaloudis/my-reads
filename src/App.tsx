@@ -6,6 +6,7 @@ import { IBook } from './components/Book/Book.model';
 import { BookshelfType } from './components/Bookshelf/Bookshelf.model';
 
 function App() {
+  const [showSearchPage, setShowSearchpage] = useState(false);
   const [books, setBooks] = useState([]);
   const [currentBooks, setCurrentBooks] = useState<IBook[]>([]);
   const [wantToReadBooks, setWantToReadBooks] = useState<IBook[]>([]);
@@ -43,6 +44,9 @@ function App() {
       <Bookshelf title={"Currently Reading"} books={currentBooks}/>
       <Bookshelf title={"Want To Read"} books={wantToReadBooks}/>
       <Bookshelf title={"Read"} books={readBooks}/>
+      <div className="search">
+            <a className="search--click" href="" onClick={() => setShowSearchpage(!showSearchPage)}>Add a book</a>
+      </div>
     </div>
   );
 }
