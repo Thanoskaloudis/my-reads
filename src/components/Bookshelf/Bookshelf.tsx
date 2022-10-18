@@ -1,5 +1,6 @@
 import React from 'react';
 import { Book } from '../Book/Book';
+import { BookChanger } from '../BookChanger/BookChanger';
 import { IBookshelf } from './Bookshelf.model';
 import './Bookshelf.scss';
 
@@ -11,6 +12,7 @@ export const Bookshelf = (props: IBookshelf) => {
         {props.books.map((book) => (
           <div key={book.id}>
             <Book {...book}/>
+            <BookChanger />
           </div>
         ))}
       </div>
