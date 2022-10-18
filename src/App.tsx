@@ -4,6 +4,8 @@ import './App.scss';
 import { Bookshelf } from './components/Bookshelf/Bookshelf';
 import { IBook } from './components/Book/Book.model';
 import { BookshelfType } from './components/Bookshelf/Bookshelf.model';
+import { Route, Routes } from 'react-router';
+import { Link } from 'react-router-dom';
 
 function App() {
   const [showSearchPage, setShowSearchpage] = useState(false);
@@ -38,15 +40,39 @@ function App() {
   
   return (
     <div className="App">
-      <header className="App-header">
-        <h2>My Reads</h2>
-      </header>
-      <Bookshelf title={"Currently Reading"} books={currentBooks}/>
-      <Bookshelf title={"Want To Read"} books={wantToReadBooks}/>
-      <Bookshelf title={"Read"} books={readBooks}/>
-      <div className="search">
-            <a className="search--click" href="" onClick={() => setShowSearchpage(!showSearchPage)}>Add a book</a>
-      </div>
+      <Routes>
+        <Route
+          path="/"
+          element={
+          <div>
+            <header className="App-header">
+              <h2>My Reads</h2>
+            </header>
+            <Bookshelf title={"Currently Reading"} books={currentBooks}/>
+            <Bookshelf title={"Want To Read"} books={wantToReadBooks}/>
+            <Bookshelf title={"Read"} books={readBooks}/>
+            <div className="search">
+                  <Link className="search--click" to="/search">Add a book</Link>
+            </div>
+          </div>
+          }
+        />
+        <Route
+          path="/search"
+          element={
+            <div className="search-books">
+            <div className="search-books--bar">
+              <div className="search-books--input__wrapper">
+                <input type="text" placeholder="Search by title, author, or ISBN"/>
+              </div>
+            </div>
+            <div className="search-books--results">
+              <ol className="books-grid"></ol>
+            </div>
+          </div>
+          }
+        />
+      </Routes>
     </div>
   );
 }
