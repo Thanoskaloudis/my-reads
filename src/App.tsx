@@ -6,6 +6,7 @@ import { IBook } from './components/Book/Book.model';
 import { BookshelfType } from './components/Bookshelf/Bookshelf.model';
 import { Route, Routes } from 'react-router';
 import { Link } from 'react-router-dom';
+import { SearchBooks } from './components/SearchBooks/SearchBooks';
 
 function App() {
   const [showSearchPage, setShowSearchpage] = useState(false);
@@ -60,16 +61,7 @@ function App() {
         <Route
           path="/search"
           element={
-            <div className="search-books">
-            <div className="search-books--bar">
-              <div className="search-books--input__wrapper">
-                <input type="text" placeholder="Search by title, author, or ISBN"/>
-              </div>
-            </div>
-            <div className="search-books--results">
-              <ol className="books-grid"></ol>
-            </div>
-          </div>
+            <SearchBooks />
           }
         />
       </Routes>
