@@ -4,8 +4,9 @@ import * as BooksAPI from "../../utils/BooksAPI";
 import './SearchBooks.scss';
 import { Book } from '../Book/Book';
 import { Link } from 'react-router-dom';
+import { ISearchBook } from './SearchBook.model';
 
-export const SearchBooks = () => {
+export const SearchBooks = (props: ISearchBook) => {
   const [searchedBooks, setSearchedBooks] = useState<IBook[]>([]);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -17,11 +18,11 @@ export const SearchBooks = () => {
         setErrorMessage("No Results Found");
       }
     })
-
-
-    console.log(errorMessage);
-    console.log(searchedBooks);
   };
+
+  const changeShelfCallback = (book: IBook, shelf: string) =>{
+    props.handleUpdateShelf(book, shelf);
+  } 
 
   return (
     <div className="search-books">
@@ -36,7 +37,7 @@ export const SearchBooks = () => {
       { (!errorMessage.length && searchedBooks.length) ?
        searchedBooks.map((book) => (
         <div key={book.id}>
-          <Book {...book}/>
+            <Book book={book} handleUpdateShelf={changeShelfCallback}/>
         </div>
         )) :
         <span> {errorMessage} </span>

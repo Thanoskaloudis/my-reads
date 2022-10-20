@@ -2,7 +2,8 @@ import { IBook } from "../Book/Book.model";
 
 export interface IBookshelf {
   title: string
-  books: IBook[]
+  books: IBook[],
+  handleUpdateShelf: any
 }
 
 export enum BookshelfType {

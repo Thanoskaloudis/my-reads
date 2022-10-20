@@ -25,7 +25,7 @@ function App() {
     };
 
     getBooks();
-  }, []);
+  }, [books]);
 
   const updateCurrentBooks = (books: IBook[]) => {
     setCurrentBooks(books.filter((book) => book.shelf === BookshelfType.CurrentlyReading));
@@ -38,6 +38,11 @@ function App() {
   const updateReadBooks = (books: IBook[]) => {
     setReadBooks(books.filter((book) => book.shelf === BookshelfType.Read));
   }
+
+  const updateShelf = async (book: IBook, shelf: string)=> {
+    const res = await BooksAPI.update(book, shelf);
+    setBooks(res);
+  }
   
   return (
     <div className="App">
@@ -49,9 +54,9 @@ function App() {
             <header className="App-header">
               <h2>My Reads</h2>
             </header>
-            <Bookshelf title={"Currently Reading"} books={currentBooks}/>
-            <Bookshelf title={"Want To Read"} books={wantToReadBooks}/>
-            <Bookshelf title={"Read"} books={readBooks}/>
+            <Bookshelf title={"Currently Reading"} books={currentBooks} handleUpdateShelf={updateShelf}/>
+            <Bookshelf title={"Want To Read"} books={wantToReadBooks} handleUpdateShelf={updateShelf}/>
+            <Bookshelf title={"Read"} books={readBooks} handleUpdateShelf={updateShelf}/>
             <div className="search">
                   <Link className="search--click" to="/search">Add a book</Link>
             </div>
@@ -61,7 +66,7 @@ function App() {
         <Route
           path="/search"
           element={
-            <SearchBooks />
+            <SearchBooks handleUpdateShelf={updateShelf}/>
           }
         />
       </Routes>

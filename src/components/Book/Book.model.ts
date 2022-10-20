@@ -27,3 +27,8 @@ export interface IBook {
   id: string,
   shelf: string
 }
+
+export interface IBookComponent {
+  book: IBook,
+  handleUpdateShelf: any
+}
