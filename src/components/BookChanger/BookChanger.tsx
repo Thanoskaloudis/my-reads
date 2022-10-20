@@ -12,7 +12,7 @@ export const BookChanger = (props: IBookChanger) => {
     <div className="changer">
       <select className="changer--select" value={props.book.shelf ? props.book.shelf : "none"}
        onChange={(e) => handleBookChanger(e.target.value)}>
-        <option value="none" disabled>
+        <option value="move" disabled>
           Move to...
         </option>
         <option value="currentlyReading">Currently Reading</option>

@@ -9,23 +9,44 @@ import { Link } from 'react-router-dom';
 import { SearchBooks } from './components/SearchBooks/SearchBooks';
 
 function App() {
-  const [showSearchPage, setShowSearchpage] = useState(false);
-  const [books, setBooks] = useState([]);
+  const [searchedBooks, setSearchedBooks] = useState<IBook[]>([]);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isErrorMessageVisible, setIsErrorMessageVisible] = useState(false);
+  const [books, setBooks] = useState<IBook[]>([]);
+  const [mergedBooks, setMergedBooks] = useState<IBook[]>([]);
   const [currentBooks, setCurrentBooks] = useState<IBook[]>([]);
   const [wantToReadBooks, setWantToReadBooks] = useState<IBook[]>([]);
   const [readBooks, setReadBooks] = useState<IBook[]>([]);
 
   useEffect(() => {
     const getBooks = async () => {
-      const res = await BooksAPI.getAll();
-      setBooks(res);
-      updateCurrentBooks(res);
-      updateWantToReadBooks(res);
-      updateReadBooks(res);
+      try {
+        const res = await BooksAPI.getAll();
+        setBooks(res);
+        updateCurrentBooks(res);
+        updateWantToReadBooks(res);
+        updateReadBooks(res);
+      } catch(error) {
+        console.log('Fetch error: ', error);
+      }
     };
 
     getBooks();
   }, [books]);
+
+  useEffect(() => {
+    if(searchedBooks && !errorMessage.length){
+      const combinedBooksShelf: any = searchedBooks.map((searchedBook) => {
+        if (books.filter(book => book.id === searchedBook.id).length) {
+          return books.find(book => book.id === searchedBook.id);
+        } else {
+          return searchedBook;
+        }
+      });
+  
+      setMergedBooks(combinedBooksShelf);
+    }
+  }, [searchedBooks]);
 
   const updateCurrentBooks = (books: IBook[]) => {
     setCurrentBooks(books.filter((book) => book.shelf === BookshelfType.CurrentlyReading));
@@ -39,9 +60,31 @@ function App() {
     setReadBooks(books.filter((book) => book.shelf === BookshelfType.Read));
   }
 
+  const updateQuery = async (query: string) => {
+    if(!query.length) {
+      setIsErrorMessageVisible(false);
+      setMergedBooks([]);
+    } else {
+      BooksAPI.search(query, 20).then(res => {
+        setSearchedBooks(res);
+        setErrorMessage("");
+        if(res === undefined || (res as any).error) {
+          setErrorMessage("No Results Found");
+          setIsErrorMessageVisible(true);
+        }
+      }, error => {
+        new Error(error)
+      })
+    }
+  };
+
   const updateShelf = async (book: IBook, shelf: string)=> {
+    try {
     const res = await BooksAPI.update(book, shelf);
     setBooks(res);
+    }catch (error) {
+      console.log('Fetch error: ', error);
+    }
   }
   
   return (
@@ -66,7 +109,13 @@ function App() {
         <Route
           path="/search"
           element={
-            <SearchBooks handleUpdateShelf={updateShelf}/>
+            <SearchBooks
+             books={mergedBooks}
+             errorMessage={errorMessage}
+             updateQuery={updateQuery}
+             handleUpdateShelf={updateShelf}
+             isErrorMessageVisible={isErrorMessageVisible}
+            />
           }
         />
       </Routes>
