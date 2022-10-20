@@ -8,7 +8,7 @@ export const Book = (props: IBook) => {
     <div className="book">
       <img className="book--cover" src={props.imageLinks.thumbnail} alt=""></img>
       <h3 className="book--title">{props.title}</h3>
-      {props.authors.map(author => (
+      {props.authors && props.authors.map(author => (
         <span className="book--author" key={author}>{author}</span>
       ))
       }
