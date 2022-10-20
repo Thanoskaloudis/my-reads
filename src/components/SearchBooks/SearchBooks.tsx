@@ -3,6 +3,7 @@ import { IBook } from '../Book/Book.model';
 import * as BooksAPI from "../../utils/BooksAPI";
 import './SearchBooks.scss';
 import { Book } from '../Book/Book';
+import { Link } from 'react-router-dom';
 
 export const SearchBooks = () => {
   const [searchedBooks, setSearchedBooks] = useState<IBook[]>([]);
@@ -25,6 +26,7 @@ export const SearchBooks = () => {
   return (
     <div className="search-books">
     <div className="search-books--bar">
+    <Link className="search-books--close" to="/">Close</Link>
       <div className="search-books--input__wrapper">
         <input type="text" onChange={(event) => updateQuery(event.target.value)}
          placeholder="Search by title, author, or ISBN"/>

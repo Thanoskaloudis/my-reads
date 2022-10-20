@@ -26,11 +26,25 @@
   }
  }
 
+ &--close {
+  display: block;
+  top: 20px;
+  left: 15px;
+  width: 50px;
+  height: 53px;
+  background: white;
+  background-image: url("../../../icons/arrow-back.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 28px;
+  font-size: 0;
+}
+
  &--results {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 4rem;
-    padding: 80px 10px 20px;
+    padding: 80px 40px 20px;
  }
 }
