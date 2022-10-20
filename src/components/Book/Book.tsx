@@ -11,7 +11,8 @@ export const Book = (props: IBookComponent) => {
 
   return (
     <div className="book">
-      <img className="book--cover" src={props.book.imageLinks.thumbnail} alt=""></img>
+      { props.book.imageLinks &&
+        <img className="book--cover" src={props.book.imageLinks.thumbnail} alt=""></img>}
       <h3 className="book--title">{props.book.title}</h3>
       {props.book.authors && props.book.authors.map(author => (
         <span className="book--author" key={author}>{author}</span>

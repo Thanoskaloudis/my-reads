@@ -9,6 +9,7 @@ import { ISearchBook } from './SearchBook.model';
 export const SearchBooks = (props: ISearchBook) => {
   const [searchedBooks, setSearchedBooks] = useState<IBook[]>([]);
   const [errorMessage, setErrorMessage] = useState("");
+  const [isErrorMessageVisible, setIsErrorMessageVisible] = useState(false);
 
   const updateQuery = async (query: string) => {
     BooksAPI.search(query, 20).then(res => {
@@ -16,6 +17,11 @@ export const SearchBooks = (props: ISearchBook) => {
       setErrorMessage("");
       if(res === undefined || (res as any).error) {
         setErrorMessage("No Results Found");
+        setIsErrorMessageVisible(true);
+      }
+
+      if(!query.length) {
+        setIsErrorMessageVisible(false);
       }
     })
   };
@@ -40,7 +46,7 @@ export const SearchBooks = (props: ISearchBook) => {
             <Book book={book} handleUpdateShelf={changeShelfCallback}/>
         </div>
         )) :
-        <span> {errorMessage} </span>
+        <span> {isErrorMessageVisible && errorMessage} </span>
       }
     </div>
   </div>
