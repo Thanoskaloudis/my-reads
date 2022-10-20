@@ -36,4 +36,9 @@ A bookshelf app that allows you to select and categorize books you have read, ar
 ## Demo:
 https://keen-youtiao-115846.netlify.app/
 
+## TODO:
+* Add a books "detail" page to display more information about any particular book
+* Add sign-up and log-in functionality to allow users to save their bookshelves to their accounts
+* Add drag-and-drop functionality to move books between shelves
+
 
